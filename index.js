@@ -34,6 +34,9 @@ const customDeclarations = fs.readFileSync('header.ts');
 
 fs.writeFileSync('react-vis.d.ts', generateTypes('react-vis', reactVis, {
   customDeclarations,
+  
+  skipReactImport: true,
+
   getComponent: (name, props, parentName, def) => {
     if (isAbstract(name)) {
       return `export interface ${name}Props<T extends ${name}Point> {${props}}\n`+

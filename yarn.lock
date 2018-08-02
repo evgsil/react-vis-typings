@@ -201,9 +201,9 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types-to-dts@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/prop-types-to-dts/-/prop-types-to-dts-0.2.0.tgz#4b0c843cee32c4ff044f3076525ad8f167ee7122"
+prop-types-to-dts@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/prop-types-to-dts/-/prop-types-to-dts-0.3.0.tgz#c3739632eef5acf42e920797e17f3048e8556758"
 
 prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.2"

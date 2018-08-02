@@ -1,30 +1,39 @@
 declare module 'react-vis' {
 
-  import { Component, CSSProperties, PureComponent, ReactChild, ReactNode, SFC } from 'react';
-
-  import * as React from 'react';
+  import {
+    Component,
+    PureComponent,
+    ReactChild,
+    ReactNode,
+    SFC,
+    MouseEventHandler,
+    TouchEventHandler,
+    WheelEventHandler,
+    MouseEvent,
+    CSSProperties,
+  } from 'react';
 
   export interface AbstractSeriesPoint {
     [key: string]: any;
   }
 
-  export type RVMouseEventHandler = React.MouseEventHandler<HTMLElement>;
-  export type RVTouchEventHandler = React.TouchEventHandler<HTMLElement>;
-  export type RVWheelEventHandler = React.WheelEventHandler<HTMLElement>;
+  export type RVMouseEventHandler = MouseEventHandler<HTMLElement>;
+  export type RVTouchEventHandler = TouchEventHandler<HTMLElement>;
+  export type RVWheelEventHandler = WheelEventHandler<HTMLElement>;
 
-  export type RVItemEventHandler  = (item: any, index: number, event: React.MouseEvent<HTMLElement>) => void;
+  export type RVItemEventHandler  = (item: any, index: number, event: MouseEvent<HTMLElement>) => void;
 
-  export type RVValueEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, event: React.MouseEvent<HTMLElement>) => void;
+  export type RVValueEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, event: MouseEvent<HTMLElement>) => void;
 
   export type RVNearestXData<T extends AbstractSeriesPoint> = {
-    event: React.MouseEvent<HTMLElement>;
+    event: MouseEvent<HTMLElement>;
     innerX: T['x'];
     index: number;
   }
   export type RVNearestXEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, data: RVNearestXData<T>) => void;
 
   export type RVNearestXYData<T extends AbstractSeriesPoint> = {
-    event: React.MouseEvent<HTMLElement>;
+    event: MouseEvent<HTMLElement>;
     innerX: T['x'];
     innerY: T['y'];
     index: number;
@@ -33,7 +42,7 @@ declare module 'react-vis' {
 
   export type RVGet<T extends AbstractSeriesPoint, K extends keyof T> = (datapoint: T) => T[K];
   export type RVGetNull<T extends AbstractSeriesPoint> = (datapoint: T) => any;
-  export type RVGetAlignStyle = (align: {horizontal: string, vertical: string}, x: number, y: number) => React.CSSProperties;
+  export type RVGetAlignStyle = (align: {horizontal: string, vertical: string}, x: number, y: number) => CSSProperties;
 
   export type RVTickFormat = (tick: any) => string;
 
@@ -159,7 +168,7 @@ declare module 'react-vis' {
     size: number;
     opacity?: number;
     color?: string | number;
-    style: React.CSSProperties;
+    style: CSSProperties;
     children: Array<TreemapPoint>;
   }
 
@@ -190,7 +199,7 @@ declare module 'react-vis' {
     size: number;
     color?: number;
     label?: string;
-    labelStyle?: React.CSSProperties;
+    labelStyle?: CSSProperties;
     dontRotateLabel?: boolean;
     children?: Array<SunburstPoint>;
   }
