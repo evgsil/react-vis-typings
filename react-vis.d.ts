@@ -1079,3 +1079,264 @@ declare module 'react-vis' {
     literalScale: (defaultValue?: any) => any;
   };
 }
+
+declare module 'react-vis/es/plot/series/abstract-series' {
+  import { AbstractSeries } from 'react-vis';
+  export default AbstractSeries;
+}
+
+declare module 'react-vis/es/plot/series/line-series' {
+  import { LineSeries } from 'react-vis';
+  export default LineSeries;
+}
+
+declare module 'react-vis/es/plot/series/line-series-canvas' {
+  import { LineSeriesCanvas } from 'react-vis';
+  export default LineSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/horizontal-bar-series' {
+  import { HorizontalBarSeries } from 'react-vis';
+  export default HorizontalBarSeries;
+}
+
+declare module 'react-vis/es/plot/series/horizontal-bar-series-canvas' {
+  import { HorizontalBarSeriesCanvas } from 'react-vis';
+  export default HorizontalBarSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/vertical-bar-series' {
+  import { VerticalBarSeries } from 'react-vis';
+  export default VerticalBarSeries;
+}
+
+declare module 'react-vis/es/plot/series/vertical-bar-series-canvas' {
+  import { VerticalBarSeriesCanvas } from 'react-vis';
+  export default VerticalBarSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/vertical-rect-series' {
+  import { VerticalRectSeries } from 'react-vis';
+  export default VerticalRectSeries;
+}
+
+declare module 'react-vis/es/plot/series/vertical-rect-series-canvas' {
+  import { VerticalRectSeriesCanvas } from 'react-vis';
+  export default VerticalRectSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/horizontal-rect-series' {
+  import { HorizontalRectSeries } from 'react-vis';
+  export default HorizontalRectSeries;
+}
+
+declare module 'react-vis/es/plot/series/horizontal-rect-series-canvas' {
+  import { HorizontalRectSeriesCanvas } from 'react-vis';
+  export default HorizontalRectSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/label-series' {
+  import { LabelSeries } from 'react-vis';
+  export default LabelSeries;
+}
+
+declare module 'react-vis/es/plot/series/polygon-series' {
+  import { PolygonSeries } from 'react-vis';
+  export default PolygonSeries;
+}
+
+declare module 'react-vis/es/plot/series/rect-series' {
+  import { RectSeries } from 'react-vis';
+  export default RectSeries;
+}
+
+declare module 'react-vis/es/plot/series/rect-series-canvas' {
+  import { RectSeriesCanvas } from 'react-vis';
+  export default RectSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/mark-series' {
+  import { MarkSeries } from 'react-vis';
+  export default MarkSeries;
+}
+
+declare module 'react-vis/es/plot/series/mark-series-canvas' {
+  import { MarkSeriesCanvas } from 'react-vis';
+  export default MarkSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/series/whisker-series' {
+  import { WhiskerSeries } from 'react-vis';
+  export default WhiskerSeries;
+}
+
+declare module 'react-vis/es/plot/series/heatmap-series' {
+  import { HeatmapSeries } from 'react-vis';
+  export default HeatmapSeries;
+}
+
+declare module 'react-vis/es/plot/series/contour-series' {
+  import { ContourSeries } from 'react-vis';
+  export default ContourSeries;
+}
+
+declare module 'react-vis/es/plot/series/custom-svg-series' {
+  import { CustomSVGSeries } from 'react-vis';
+  export default CustomSVGSeries;
+}
+
+declare module 'react-vis/es/plot/series/area-series' {
+  import { AreaSeries } from 'react-vis';
+  export default AreaSeries;
+}
+
+declare module 'react-vis/es/plot/series/arc-series' {
+  import { ArcSeries } from 'react-vis';
+  export default ArcSeries;
+}
+
+declare module 'react-vis/es/plot/series/line-mark-series' {
+  import { LineMarkSeries } from 'react-vis';
+  export default LineMarkSeries;
+}
+
+declare module 'react-vis/es/plot/series/line-mark-series-canvas' {
+  import { LineMarkSeriesCanvas } from 'react-vis';
+  export default LineMarkSeriesCanvas;
+}
+
+declare module 'react-vis/es/plot/hint' {
+  import { Hint } from 'react-vis';
+  export default Hint;
+}
+
+declare module 'react-vis/es/plot/borders' {
+  import { Borders } from 'react-vis';
+  export default Borders;
+}
+
+declare module 'react-vis/es/plot/crosshair' {
+  import { Crosshair } from 'react-vis';
+  export default Crosshair;
+}
+
+declare module 'react-vis/es/plot/xy-plot' {
+  import { XYPlot } from 'react-vis';
+  export default XYPlot;
+}
+
+declare module 'react-vis/es/plot/axis/decorative-axis' {
+  import { DecorativeAxis } from 'react-vis';
+  export default DecorativeAxis;
+}
+
+declare module 'react-vis/es/plot/axis/x-axis' {
+  import { XAxis } from 'react-vis';
+  export default XAxis;
+}
+
+declare module 'react-vis/es/plot/axis/y-axis' {
+  import { YAxis } from 'react-vis';
+  export default YAxis;
+}
+
+declare module 'react-vis/es/plot/circular-grid-lines' {
+  import { CircularGridLines } from 'react-vis';
+  export default CircularGridLines;
+}
+
+declare module 'react-vis/es/plot/grid-lines' {
+  import { GridLines } from 'react-vis';
+  export default GridLines;
+}
+
+declare module 'react-vis/es/plot/gradient-defs' {
+  import { GradientDefs } from 'react-vis';
+  export default GradientDefs;
+}
+
+declare module 'react-vis/es/plot/vertical-grid-lines' {
+  import { VerticalGridLines } from 'react-vis';
+  export default VerticalGridLines;
+}
+
+declare module 'react-vis/es/plot/horizontal-grid-lines' {
+  import { HorizontalGridLines } from 'react-vis';
+  export default HorizontalGridLines;
+}
+
+declare module 'react-vis/es/plot/voronoi' {
+  import { Voronoi } from 'react-vis';
+  export default Voronoi;
+}
+
+declare module 'react-vis/es/legends/discrete-color-legend' {
+  import { DiscreteColorLegend } from 'react-vis';
+  export default DiscreteColorLegend;
+}
+
+declare module 'react-vis/es/legends/searchable-discrete-color-legend' {
+  import { SearchableDiscreteColorLegend } from 'react-vis';
+  export default SearchableDiscreteColorLegend;
+}
+
+declare module 'react-vis/es/legends/continuous-color-legend' {
+  import { ContinuousColorLegend } from 'react-vis';
+  export default ContinuousColorLegend;
+}
+
+declare module 'react-vis/es/legends/continuous-size-legend' {
+  import { ContinuousSizeLegend } from 'react-vis';
+  export default ContinuousSizeLegend;
+}
+
+declare module 'react-vis/es/treemap' {
+  import { Treemap } from 'react-vis';
+  export default Treemap;
+}
+
+declare module 'react-vis/es/radial-chart' {
+  import { RadialChart } from 'react-vis';
+  export default RadialChart;
+}
+
+declare module 'react-vis/es/radar-chart' {
+  import { RadarChart } from 'react-vis';
+  export default RadarChart;
+}
+
+declare module 'react-vis/es/parallel-coordinates' {
+  import { ParallelCoordinates } from 'react-vis';
+  export default ParallelCoordinates;
+}
+
+declare module 'react-vis/es/sankey' {
+  import { Sankey } from 'react-vis';
+  export default Sankey;
+}
+
+declare module 'react-vis/es/sunburst' {
+  import { Sunburst } from 'react-vis';
+  export default Sunburst;
+}
+
+declare module 'react-vis/es/utils/axis-utils' {
+  import { AxisUtils } from 'react-vis';
+  export default AxisUtils;
+}
+
+declare module 'react-vis/es/utils/scales-utils' {
+  import { ScaleUtils } from 'react-vis';
+  export default ScaleUtils;
+}
+
+declare module 'react-vis/es/make-vis-flexible' {
+  export {
+    makeHeightFlexible,
+    makeVisFlexible,
+    makeWidthFlexible,
+    FlexibleXYPlot,
+    FlexibleWidthXYPlot,
+    FlexibleHeightXYPlot,
+  } from 'react-vis';
+}

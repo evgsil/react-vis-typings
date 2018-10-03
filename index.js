@@ -32,7 +32,7 @@ function getPoint(name) {
 
 const customDeclarations = fs.readFileSync('header.ts');
 
-fs.writeFileSync('react-vis.d.ts', generateTypes('react-vis', reactVis, {
+const reactVisTypings = generateTypes('react-vis', reactVis, {
   customDeclarations,
   
   skipReactImport: true,
@@ -132,5 +132,38 @@ fs.writeFileSync('react-vis.d.ts', generateTypes('react-vis', reactVis, {
       return def;
     }
   },
-}));
+});
+
+const imports = fs.readFileSync('./node_modules/react-vis/es/index.js', 'utf8');
+const pathMap = new Map();
+
+const regex = /import\s+_(\S+)\s+from\s+'(\S+)'/g;
+let match;
+do {
+  match = regex.exec(imports);
+  if (match) {
+    pathMap.set(match[1], match[2]);
+  }
+} while(match);
+
+const subModules = Object.keys(reactVis)
+  .filter(key=>pathMap.has(key))
+  .map(key =>
+`declare module '${pathMap.get(key).replace('.', 'react-vis/es')}' {
+  import { ${key} } from 'react-vis';
+  export default ${key};
+}`).join('\n\n') + '\n\n' +
+`declare module 'react-vis/es/make-vis-flexible' {
+  export {
+    makeHeightFlexible,
+    makeVisFlexible,
+    makeWidthFlexible,
+    FlexibleXYPlot,
+    FlexibleWidthXYPlot,
+    FlexibleHeightXYPlot,
+  } from 'react-vis';
+}`;
+
+
+fs.writeFileSync('react-vis.d.ts', reactVisTypings+'\n'+subModules);
 
