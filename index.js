@@ -165,5 +165,5 @@ const subModules = Object.keys(reactVis)
 }`;
 
 
-fs.writeFileSync('react-vis.d.ts', reactVisTypings+'\n'+subModules);
+fs.writeFileSync('react-vis.d.ts', reactVisTypings+'\n'+subModules+'\n');
 
