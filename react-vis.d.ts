@@ -524,7 +524,12 @@ declare module 'react-vis' {
     top?: number;
     left?: number;
     title?: string;
-    style?: CSSProperties;
+    style?: CSSProperties & {
+      line?: CSSProperties;
+      text?: CSSProperties;
+      ticks?: CSSProperties;
+      title?: CSSProperties;
+    };
     className?: string;
     hideTicks?: boolean;
     hideLine?: boolean;
@@ -555,7 +560,12 @@ declare module 'react-vis' {
     top?: number;
     left?: number;
     title?: string;
-    style?: CSSProperties;
+    style?: CSSProperties & {
+      line?: CSSProperties;
+      text?: CSSProperties;
+      ticks?: CSSProperties;
+      title?: CSSProperties;
+    };
     className?: string;
     hideTicks?: boolean;
     hideLine?: boolean;
