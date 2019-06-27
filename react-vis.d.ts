@@ -265,7 +265,7 @@ declare module 'react-vis' {
     onSeriesClick?: RVMouseEventHandler;
     onSeriesRightClick?: RVMouseEventHandler;
     onNearestX?: RVNearestXEventHandler<T>;
-    onNearestXY?: RVNearestXEventHandler<T>;
+    onNearestXY?: RVNearestXYEventHandler<T>;
     style?: CSSProperties; //default: {}
     animation?: string | {
       stiffness?: number;
