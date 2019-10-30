@@ -48,7 +48,7 @@ declare module 'react-vis' {
 
 
   export interface LineSeriesPoint extends AbstractSeriesPoint {
-    x: number;
+    x: string | number;
     y: number;
     color?: string | number;
   }
