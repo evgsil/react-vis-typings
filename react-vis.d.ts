@@ -576,6 +576,17 @@ declare module 'react-vis' {
     innerHeight?: number;
   }
   export const YAxis: SFC<YAxisProps>;
+  
+  export class ChartLabel extends Component<ChartLabelProps> {}
+
+  export interface ChartLabelProps {
+    text: string;
+    className?: string;
+    includeMargin?: boolean;
+    xPercent?: number;
+    yPercent?: number;
+    style?: CSSProperty;
+  }
 
   export interface CircularGridLinesProps {
     centerX?: number; //default: 0
