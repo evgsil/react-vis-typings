@@ -1,16 +1,15 @@
 declare module 'react-vis' {
-
   import {
     Component,
+    ComponentType,
+    CSSProperties,
+    MouseEvent,
+    MouseEventHandler,
     PureComponent,
     ReactChild,
-    ReactNode,
     SFC,
-    MouseEventHandler,
     TouchEventHandler,
-    WheelEventHandler,
-    MouseEvent,
-    CSSProperties,
+    WheelEventHandler
   } from 'react';
 
   export interface AbstractSeriesPoint {
@@ -21,31 +20,47 @@ declare module 'react-vis' {
   export type RVTouchEventHandler = TouchEventHandler<HTMLElement>;
   export type RVWheelEventHandler = WheelEventHandler<HTMLElement>;
 
-  export type RVItemEventHandler  = (item: any, index: number, event: MouseEvent<HTMLElement>) => void;
+  export type RVItemEventHandler = (
+    item: any,
+    index: number,
+    event: MouseEvent<HTMLElement>
+  ) => void;
 
-  export type RVValueEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, event: MouseEvent<HTMLElement>) => void;
+  export type RVValueEventHandler<T extends AbstractSeriesPoint> = (
+    datapoint: T,
+    event: MouseEvent<HTMLElement>
+  ) => void;
 
   export type RVNearestXData<T extends AbstractSeriesPoint> = {
     event: MouseEvent<HTMLElement>;
     innerX: T['x'];
     index: number;
-  }
-  export type RVNearestXEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, data: RVNearestXData<T>) => void;
+  };
+  export type RVNearestXEventHandler<T extends AbstractSeriesPoint> = (
+    datapoint: T,
+    data: RVNearestXData<T>
+  ) => void;
 
   export type RVNearestXYData<T extends AbstractSeriesPoint> = {
     event: MouseEvent<HTMLElement>;
     innerX: T['x'];
     innerY: T['y'];
     index: number;
-  }
-  export type RVNearestXYEventHandler<T extends AbstractSeriesPoint> = (datapoint: T, data: RVNearestXYData<T>) => void;
+  };
+  export type RVNearestXYEventHandler<T extends AbstractSeriesPoint> = (
+    datapoint: T,
+    data: RVNearestXYData<T>
+  ) => void;
 
   export type RVGet<T extends AbstractSeriesPoint, K extends keyof T> = (datapoint: T) => T[K];
   export type RVGetNull<T extends AbstractSeriesPoint> = (datapoint: T) => any;
-  export type RVGetAlignStyle = (align: {horizontal: string, vertical: string}, x: number, y: number) => CSSProperties;
+  export type RVGetAlignStyle = (
+    align: { horizontal: string; vertical: string },
+    x: number,
+    y: number
+  ) => CSSProperties;
 
   export type RVTickFormat = (tick: any) => string;
-
 
   export interface LineSeriesPoint extends AbstractSeriesPoint {
     x: number;
@@ -162,16 +177,22 @@ declare module 'react-vis' {
     yVariance?: string | number;
   }
 
-
-  export interface TreemapPoint extends AbstractSeriesPoint {
+  export interface TreemapPointBase extends AbstractSeriesPoint {
     title: string;
-    size: number;
     opacity?: number;
     color?: string | number;
-    style: CSSProperties;
+    style?: CSSProperties;
+  }
+
+  export interface TreemapPointBranch extends TreemapPointBase {
     children: Array<TreemapPoint>;
   }
 
+  export interface TreemapPointLeaf extends TreemapPointBase {
+    size: number;
+  }
+
+  export type TreemapPoint = TreemapPointBranch | TreemapPointLeaf;
 
   export interface ParallelCoordinatesPoint extends AbstractSeriesPoint {
     [key: string]: number;
@@ -267,16 +288,20 @@ declare module 'react-vis' {
     onNearestX?: RVNearestXEventHandler<T>;
     onNearestXY?: RVNearestXEventHandler<T>;
     style?: CSSProperties; //default: {}
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     stack?: boolean; //default: false
     color?: string | number;
     stroke?: string | number;
     fill?: string | number;
     opacity?: number;
+    barWidth?: number;
   }
   export class AbstractSeries<T> extends PureComponent<T> {}
 
@@ -292,29 +317,37 @@ declare module 'react-vis' {
   }
   export class LineSeriesCanvas extends AbstractSeries<LineSeriesCanvasProps> {}
 
-  export interface HorizontalBarSeriesProps extends AbstractSeriesProps<HorizontalBarSeriesPoint> {}
+  export interface HorizontalBarSeriesProps
+    extends AbstractSeriesProps<HorizontalBarSeriesPoint> {}
   export class HorizontalBarSeries extends AbstractSeries<HorizontalBarSeriesProps> {}
 
-  export interface HorizontalBarSeriesCanvasProps extends AbstractSeriesProps<HorizontalBarSeriesPoint> {}
+  export interface HorizontalBarSeriesCanvasProps
+    extends AbstractSeriesProps<HorizontalBarSeriesPoint> {}
   export class HorizontalBarSeriesCanvas extends AbstractSeries<HorizontalBarSeriesCanvasProps> {}
 
   export interface VerticalBarSeriesProps extends AbstractSeriesProps<VerticalBarSeriesPoint> {}
   export class VerticalBarSeries extends AbstractSeries<VerticalBarSeriesProps> {}
 
-  export interface VerticalBarSeriesCanvasProps extends AbstractSeriesProps<VerticalBarSeriesPoint> {}
+  export interface VerticalBarSeriesCanvasProps
+    extends AbstractSeriesProps<VerticalBarSeriesPoint> {}
   export class VerticalBarSeriesCanvas extends AbstractSeries<VerticalBarSeriesCanvasProps> {}
 
   export interface VerticalRectSeriesProps extends AbstractSeriesProps<VerticalRectSeriesPoint> {}
   export class VerticalRectSeries extends AbstractSeries<VerticalRectSeriesProps> {}
 
-  export interface VerticalRectSeriesCanvasProps extends AbstractSeriesProps<VerticalRectSeriesPoint> {}
+  export interface VerticalRectSeriesCanvasProps
+    extends AbstractSeriesProps<VerticalRectSeriesPoint> {}
   export class VerticalRectSeriesCanvas extends AbstractSeries<VerticalRectSeriesCanvasProps> {}
 
-  export interface HorizontalRectSeriesProps extends AbstractSeriesProps<HorizontalRectSeriesPoint> {}
+  export interface HorizontalRectSeriesProps
+    extends AbstractSeriesProps<HorizontalRectSeriesPoint> {}
   export class HorizontalRectSeries extends AbstractSeries<HorizontalRectSeriesProps> {}
 
-  export interface HorizontalRectSeriesCanvasProps extends AbstractSeriesProps<HorizontalRectSeriesPoint> {}
-  export class HorizontalRectSeriesCanvas extends AbstractSeries<HorizontalRectSeriesCanvasProps> {}
+  export interface HorizontalRectSeriesCanvasProps
+    extends AbstractSeriesProps<HorizontalRectSeriesPoint> {}
+  export class HorizontalRectSeriesCanvas extends AbstractSeries<
+    HorizontalRectSeriesCanvasProps
+  > {}
 
   export interface LabelSeriesProps extends AbstractSeriesProps<LabelSeriesPoint> {
     allowOffsetToBeReversed?: boolean;
@@ -418,8 +451,8 @@ declare module 'react-vis' {
     marginLeft?: number;
     innerWidth?: number;
     innerHeight?: number;
-    scales?: {[key: string]: any};
-    value?: {[key: string]: any};
+    scales?: { [key: string]: any };
+    value?: { [key: string]: any };
     format?: Function;
     style?: CSSProperties; //default: {}
     align?: {
@@ -450,7 +483,7 @@ declare module 'react-vis' {
   export interface CrosshairProps {
     className?: string;
     values?: Array<any>;
-    series?: {[key: string]: any};
+    series?: { [key: string]: any };
     innerWidth?: number;
     innerHeight?: number;
     marginLeft?: number;
@@ -467,20 +500,25 @@ declare module 'react-vis' {
   export class Crosshair<T = any> extends PureComponent<CrosshairProps & T> {}
 
   export interface XYPlotProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string; //default: ''
     dontCheckIfEmpty?: boolean;
     height: number;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     onClick?: RVMouseEventHandler;
     onDoubleClick?: RVMouseEventHandler;
     onMouseDown?: RVMouseEventHandler;
@@ -517,6 +555,7 @@ declare module 'react-vis' {
 
   export interface XAxisProps {
     orientation?: 'top' | 'bottom'; //default: 'bottom'
+    position?: 'end' | 'middle' | 'start'; //default: 'end'
     attr?: string; //default: 'x'
     attrAxis?: string; //default: 'y'
     width?: number;
@@ -548,6 +587,7 @@ declare module 'react-vis' {
 
   export interface YAxisProps {
     orientation?: 'left' | 'right'; //default: 'left'
+    position?: 'end' | 'middle' | 'start'; //default: 'end'
     attr?: string; //default: 'y'
     attrAxis?: string; //default: 'x'
     width?: number;
@@ -588,11 +628,14 @@ declare module 'react-vis' {
     style?: CSSProperties;
     tickValues?: Array<number>;
     tickTotal?: number;
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     marginTop?: number;
     marginBottom?: number;
     marginLeft?: number;
@@ -612,11 +655,14 @@ declare module 'react-vis' {
     style?: CSSProperties;
     tickValues?: Array<any>;
     tickTotal?: number;
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     marginTop?: number;
     marginBottom?: number;
     marginLeft?: number;
@@ -641,11 +687,14 @@ declare module 'react-vis' {
     style?: CSSProperties;
     tickValues?: Array<any>;
     tickTotal?: number;
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     marginTop?: number;
     marginBottom?: number;
     marginLeft?: number;
@@ -665,11 +714,14 @@ declare module 'react-vis' {
     style?: CSSProperties;
     tickValues?: Array<any>;
     tickTotal?: number;
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     marginTop?: number;
     marginBottom?: number;
     marginLeft?: number;
@@ -695,27 +747,36 @@ declare module 'react-vis' {
 
   export interface DiscreteColorLegendProps {
     className?: string; //default: ''
-    items: Array<{
-      title: string;
-      color?: string;
-      disabled?: boolean;
-    } | string | ReactChild>;
+    items: Array<
+      | {
+          title: string;
+          color?: string;
+          disabled?: boolean;
+        }
+      | string
+      | ReactChild
+    >;
     onItemClick?: RVMouseEventHandler;
     onItemMouseEnter?: RVItemEventHandler;
     onItemMouseLeave?: RVItemEventHandler;
     height?: number;
     width?: number;
-    orientation?: 'vertical' | 'horizontal'; //default: 'vertical'
+    orientation?: 'vertical' | 'horizontal'; //default: 'vertical',
+    style?: CSSProperties;
   }
   export const DiscreteColorLegend: SFC<DiscreteColorLegendProps>;
 
   export interface SearchableDiscreteColorLegendProps {
     className?: string; //default: ''
-    items: Array<{
-      title: string;
-      color?: string;
-      disabled?: boolean;
-    } | string | ReactChild>;
+    items: Array<
+      | {
+          title: string;
+          color?: string;
+          disabled?: boolean;
+        }
+      | string
+      | ReactChild
+    >;
     onItemClick?: RVMouseEventHandler;
     onItemMouseEnter?: RVItemEventHandler;
     onItemMouseLeave?: RVItemEventHandler;
@@ -755,27 +816,42 @@ declare module 'react-vis' {
   export const ContinuousSizeLegend: SFC<ContinuousSizeLegendProps>;
 
   export interface TreemapProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string; //default: ''
     data?: TreemapPoint; //default: {'children':[]}
     height: number;
     hideRootNode?: boolean; //default: false
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number; //default: {'left':40,'right':10,'top':10,'bottom':40}
-    mode?: 'squarify' | 'resquarify' | 'slice' | 'dice' | 'slicedice' | 'binary' | 'circlePack' | 'partition' | 'partition-pivot'; //default: 'squarify'
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number; //default: {'left':40,'right':10,'top':10,'bottom':40}
+    mode?:
+      | 'squarify'
+      | 'resquarify'
+      | 'slice'
+      | 'dice'
+      | 'slicedice'
+      | 'binary'
+      | 'circlePack'
+      | 'partition'
+      | 'partition-pivot'; //default: 'squarify'
     onLeafClick?: RVValueEventHandler<TreemapPoint>;
     onLeafMouseOver?: RVValueEventHandler<TreemapPoint>;
     onLeafMouseOut?: RVValueEventHandler<TreemapPoint>;
     useCirclePacking?: boolean;
     padding?: number; //default: 1
+    colorType?: string;
     sortFunction?: Function;
     width: number;
     getSize?: RVGet<TreemapPoint, 'size'>;
@@ -783,12 +859,25 @@ declare module 'react-vis' {
   }
   export class Treemap<T = any> extends Component<TreemapProps & T> {}
 
+  export interface ChartLabelProps {
+    text: string;
+    className?: string;
+    includeMargin?: boolean;
+    xPercent: number;
+    yPercent: number;
+    style?: object;
+  }
+  export class ChartLabel<T = any> extends Component<ChartLabelProps & T> {}
+
   export interface RadialChartProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string; //default: ''
     colorType?: string; //default: 'category'
     data: Array<{
@@ -797,6 +886,7 @@ declare module 'react-vis' {
       label?: string;
       radius?: number;
       style?: CSSProperties;
+      color?: string;
     }>;
     getAngle?: RVGet<RadialChartPoint, 'angle'>;
     getAngle0?: RVGet<RadialChartPoint, 'angle0'>;
@@ -806,12 +896,14 @@ declare module 'react-vis' {
     height: number;
     labelsAboveChildren?: boolean;
     labelsStyle?: CSSProperties;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     onValueClick?: RVValueEventHandler<RadialChartPoint>;
     onValueMouseOver?: RVValueEventHandler<RadialChartPoint>;
     onValueMouseOut?: RVValueEventHandler<RadialChartPoint>;
@@ -819,15 +911,20 @@ declare module 'react-vis' {
     style?: CSSProperties;
     subLabel?: Function;
     width: number;
+    innerRadius?: number;
+    radius?: number;
   }
   export class RadialChart<T = any> extends Component<RadialChartProps & T> {}
 
   export interface RadarChartProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string; //default: ''
     colorType?: string; //default: 'category'
     colorRange?: Array<string>; //default: ['#12939A','#79C7E3','#1A3177','#FF9833','#EF5D28']
@@ -839,12 +936,14 @@ declare module 'react-vis' {
     }>;
     height: number;
     hideInnerMostValues?: boolean; //default: true
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     startingAngle?: number; //default: 1.5707963267948966
     style?: {
       axes?: CSSProperties;
@@ -857,11 +956,14 @@ declare module 'react-vis' {
   export class RadarChart<T = any> extends Component<RadarChartProps & T> {}
 
   export interface ParallelCoordinatesProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string; //default: ''
     colorType?: string; //default: 'category'
     colorRange?: Array<string>; //default: ['#12939A','#79C7E3','#1A3177','#FF9833','#EF5D28']
@@ -872,12 +974,14 @@ declare module 'react-vis' {
       tickFormat?: RVTickFormat;
     }>;
     height: number;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     style?: {
       axes?: CSSProperties;
       labels?: CSSProperties;
@@ -897,15 +1001,17 @@ declare module 'react-vis' {
     hideLabels?: boolean; //default: false
     layout?: number; //default: 50
     links: Array<{
-      source: number | {[key: string]: any};
-      target: number | {[key: string]: any};
+      source: number | { [key: string]: any };
+      target: number | { [key: string]: any };
     }>;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number; //default: {'top':20,'left':20,'right':20,'bottom':20}
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number; //default: {'top':20,'left':20,'right':20,'bottom':20}
     nodePadding?: number; //default: 10
     nodes: Array<SankeyPoint>;
     nodeWidth?: number; //default: 10
@@ -925,11 +1031,14 @@ declare module 'react-vis' {
   export class Sankey<T = any> extends Component<SankeyProps & T> {}
 
   export interface SunburstProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     getAngle?: RVGet<SunburstPoint, 'angle'>;
     getAngle0?: RVGet<SunburstPoint, 'angle0'>;
     className?: string; //default: ''
@@ -947,19 +1056,24 @@ declare module 'react-vis' {
   export class Sunburst<T = any> extends Component<SunburstProps & T> {}
 
   export interface FlexibleXYPlotProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string;
     dontCheckIfEmpty?: boolean;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     onClick?: RVMouseEventHandler;
     onDoubleClick?: RVMouseEventHandler;
     onMouseDown?: RVMouseEventHandler;
@@ -978,19 +1092,25 @@ declare module 'react-vis' {
   export class FlexibleXYPlot<T = any> extends Component<FlexibleXYPlotProps & T> {}
 
   export interface FlexibleWidthXYPlotProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string;
     dontCheckIfEmpty?: boolean;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    height: number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     onClick?: RVMouseEventHandler;
     onDoubleClick?: RVMouseEventHandler;
     onMouseDown?: RVMouseEventHandler;
@@ -1009,19 +1129,24 @@ declare module 'react-vis' {
   export class FlexibleWidthXYPlot<T = any> extends Component<FlexibleWidthXYPlotProps & T> {}
 
   export interface FlexibleHeightXYPlotProps {
-    animation?: string | {
-      stiffness?: number;
-      nonAnimatedProps?: Array<string>;
-      damping?: number;
-    } | boolean;
+    animation?:
+      | string
+      | {
+          stiffness?: number;
+          nonAnimatedProps?: Array<string>;
+          damping?: number;
+        }
+      | boolean;
     className?: string;
     dontCheckIfEmpty?: boolean;
-    margin?: {
-      left?: number;
-      top?: number;
-      right?: number;
-      bottom?: number;
-    } | number;
+    margin?:
+      | {
+          left?: number;
+          top?: number;
+          right?: number;
+          bottom?: number;
+        }
+      | number;
     onClick?: RVMouseEventHandler;
     onDoubleClick?: RVMouseEventHandler;
     onMouseDown?: RVMouseEventHandler;
@@ -1036,15 +1161,21 @@ declare module 'react-vis' {
     onWheel?: RVWheelEventHandler;
     stackBy?: 'x' | 'y' | 'radius' | 'angle' | 'color' | 'fill' | 'stroke' | 'opacity' | 'size';
     style?: CSSProperties;
+    width: number;
   }
   export class FlexibleHeightXYPlot<T = any> extends Component<FlexibleHeightXYPlotProps & T> {}
 
+  export function makeHeightFlexible<T>(
+    component: ComponentType<T>
+  ): ComponentType<Omit<T, 'height'>>;
 
-  export const makeHeightFlexible: (component?: any) => any;
+  export function makeVisFlexible<T>(
+    component: ComponentType<T>
+  ): ComponentType<Omit<T, 'height' | 'width'>>;
 
-  export const makeVisFlexible: (component?: any) => any;
-
-  export const makeWidthFlexible: (component?: any) => any;
+  export function makeWidthFlexible<T>(
+    component: ComponentType<T>
+  ): ComponentType<Omit<T, 'width'>>;
 
   export const AxisUtils: {
     DIRECTION: {
@@ -1337,6 +1468,6 @@ declare module 'react-vis/es/make-vis-flexible' {
     makeWidthFlexible,
     FlexibleXYPlot,
     FlexibleWidthXYPlot,
-    FlexibleHeightXYPlot,
+    FlexibleHeightXYPlot
   } from 'react-vis';
 }
